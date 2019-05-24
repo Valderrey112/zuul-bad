@@ -34,7 +34,36 @@ public class Game
      */
     private void createRooms()
     {
+        Room campo, vestuarios, duchas, pasilloDorm1, pasilloDorm2, dormitorios, armeria,
+        pasilloSecreto, almacen, hornos, salaCeniza;
+      
+        // create the rooms
+        campo = new Room("en pleno exterior del campo de concentracion");
+        vestuarios = new Room("en un vestuario lleno de taquillas sin nombre");
+        duchas = new Room("en las duchas, parece que no se han pasado buenos momentos");
+        pasilloDorm1 = new Room("en un largo pasillo, al fondo se ven camas");
+        pasilloDorm2 = new Room("aun en el pasillo, lográs ver un dormitorio");
+        dormitorios = new Room("en los dormitorio, no hay nadie");
+        pasilloSecreto = new Room("en un pasillo oculto en las paredes");
+        armeria = new Room("en una sala llena de armamento militar");
+        almacen = new Room("en un gran almacen lleno de alimentos de baja calidad");
+        hornos = new Room("en los hornos crematorios del campo");
+        salaCeniza = new Room("en una sala repleta de ceniza, parece que aqui almacenan los restos.");
         
+        // initialise room exits
+        campo.setExits(hornos, vestuarios, almacen, pasilloDorm1);
+        vestuarios.setExits(null, duchas, null, campo);
+        duchas.setExits(null, null, null, vestuarios);
+        pasilloDorm1.setExits(null, campo, null, pasilloDorm2);
+        pasilloDorm2.setExits(null, pasilloDorm1, pasilloSecreto, dormitorios);
+        dormitorios.setExits(null, pasilloDorm2, null, null);
+        pasilloSecreto.setExits(pasilloDorm2, null, armeria, null);
+        armeria.setExits(pasilloSecreto, null, null, null);
+        almacen.setExits(campo, null, null, null);
+        hornos.setExits(salaCeniza, null, campo, null);
+        salaCeniza.setExits(null, null, hornos, null);
+
+        currentRoom = campo;  // start game outside
     }
 
     /**
