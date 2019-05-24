@@ -35,7 +35,7 @@ public class Game
     private void createRooms()
     {
         Room campo, vestuarios, duchas, pasilloDorm1, pasilloDorm2, dormitorios, armeria,
-        pasilloSecreto, almacen, hornos, salaCeniza;
+        pasilloSecreto, almacen, hornos, salaCeniza, salaGas;
       
         // create the rooms
         campo = new Room("en pleno exterior del campo de concentracion");
@@ -49,19 +49,21 @@ public class Game
         almacen = new Room("en un gran almacen lleno de alimentos de baja calidad");
         hornos = new Room("en los hornos crematorios del campo");
         salaCeniza = new Room("en una sala repleta de ceniza, parece que aqui almacenan los restos.");
+        salaGas = new Room("en la sala donde controlan el gas de las duchas, parece nque no hay una salida.");
         
         // initialise room exits
-        campo.setExits(hornos, vestuarios, almacen, pasilloDorm1);
-        vestuarios.setExits(null, duchas, null, campo);
-        duchas.setExits(null, null, null, vestuarios);
-        pasilloDorm1.setExits(null, campo, null, pasilloDorm2);
-        pasilloDorm2.setExits(null, pasilloDorm1, pasilloSecreto, dormitorios);
-        dormitorios.setExits(null, pasilloDorm2, null, null);
-        pasilloSecreto.setExits(pasilloDorm2, null, armeria, null);
-        armeria.setExits(pasilloSecreto, null, null, null);
-        almacen.setExits(campo, null, null, null);
-        hornos.setExits(salaCeniza, null, null, null);
-        salaCeniza.setExits(null, null, hornos, null);
+        campo.setExits(hornos, vestuarios, almacen, null, pasilloDorm1);
+        vestuarios.setExits(null, duchas, null, null, campo);
+        duchas.setExits(null, null, null, salaGas, vestuarios);
+        pasilloDorm1.setExits(null, campo, null, null, pasilloDorm2);
+        pasilloDorm2.setExits(null, pasilloDorm1, pasilloSecreto, null, dormitorios);
+        dormitorios.setExits(null, pasilloDorm2, null, null, null);
+        pasilloSecreto.setExits(pasilloDorm2, null, armeria, null, null);
+        armeria.setExits(pasilloSecreto, null, null, null, null);
+        almacen.setExits(campo, null, null, null, null);
+        hornos.setExits(salaCeniza, null, null, null, null);
+        salaCeniza.setExits(null, null, hornos, null, null);
+        salaGas.setExits(null, null, null, null, null);
 
         currentRoom = campo;  // start game outside
     }
@@ -114,6 +116,9 @@ public class Game
         if(currentRoom.southExit != null) {
             System.out.print("south ");
         }
+        if(currentRoom.southEastExit != null) {
+            System.out.print("southeast ");
+        }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
         }
@@ -130,7 +135,7 @@ public class Game
         boolean wantToQuit = false;
 
         if(command.isUnknown()) {
-            System.out.println("I don't know what you mean...");
+            System.out.println("No se que estas diciendo...");
             return false;
         }
 
@@ -172,7 +177,7 @@ public class Game
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
+            System.out.println("¿Donde ir?");
             return;
         }
 
@@ -189,12 +194,15 @@ public class Game
         if(direction.equals("south")) {
             nextRoom = currentRoom.southExit;
         }
+        if(direction.equals("southeast")) {
+            nextRoom = currentRoom.southEastExit;
+        }
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("¡Aquí no hay puerta!");
         }
         else {
             currentRoom = nextRoom;
@@ -210,7 +218,7 @@ public class Game
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
+            System.out.println("¿Quitar que?");
             return false;
         }
         else {
