@@ -14,12 +14,12 @@
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room southEastExit;
-    public Room westExit;
+    private String description;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room southEastExit;
+    private Room westExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -43,16 +43,21 @@ public class Room
      */
     public void setExits(Room north, Room east, Room south, Room southEast, Room west) 
     {
-        if(north != null)
+        if(north != null){
             northExit = north;
-        if(east != null)
+        }
+        if(east != null){
             eastExit = east;
-        if(south != null)
+        }
+        if(south != null){
             southExit = south;
-        if(southEast != null)
+        }
+        if(southEast != null){
             southEastExit = southEast;
-        if(west != null)
-            westExit = west;    
+        }
+        if(west != null){
+            westExit = west;  
+        }
     }
 
     /**
@@ -63,4 +68,50 @@ public class Room
         return description;
     }
 
+    public Room getExit(String direction)
+    {
+        Room roomToReturn = null;
+        if (direction.equals("north")){
+            roomToReturn = northExit;
+        }
+        if (direction.equals("south")){
+            roomToReturn = southExit;
+        }
+        if (direction.equals("east")){
+            roomToReturn = eastExit;
+        }
+        if (direction.equals("southeast")){
+            roomToReturn = southEastExit;
+        }
+        if (direction.equals("west")){
+            roomToReturn = westExit;
+        }
+        return roomToReturn;
+    }
+    
+    /**
+     * Devuelve la información de las salidas existentes
+     * Por ejemplo: "Exits: north east west"
+     *
+     * @return Una descripción de las salidas existentes.
+     */
+    public String getExitString(){
+        String cadena = "Salidas:";
+        if(northExit != null) {
+            cadena += " north";
+        }
+        if(southExit != null) {
+            cadena += " south";
+        }
+        if(eastExit != null) {
+            cadena += " east";
+        }
+        if(southEastExit != null) {
+            cadena += " southeast";
+        }
+        if(westExit != null) {
+            cadena += " west";
+        }
+        return cadena;
+    }
 }
