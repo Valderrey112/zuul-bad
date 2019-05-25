@@ -49,21 +49,21 @@ public class Game
         almacen = new Room("en un gran almacen lleno de alimentos de baja calidad");
         hornos = new Room("en los hornos crematorios del campo");
         salaCeniza = new Room("en una sala repleta de ceniza, parece que aqui almacenan los restos.");
-        salaGas = new Room("en la sala donde controlan el gas de las duchas, parece nque no hay una salida.");
+        salaGas = new Room("en la sala donde controlan el gas de las duchas.");
         
         // initialise room exits
-        campo.setExits(hornos, vestuarios, almacen, null, pasilloDorm1);
-        vestuarios.setExits(null, duchas, null, null, campo);
-        duchas.setExits(null, null, null, salaGas, vestuarios);
-        pasilloDorm1.setExits(null, campo, null, null, pasilloDorm2);
-        pasilloDorm2.setExits(null, pasilloDorm1, pasilloSecreto, null, dormitorios);
-        dormitorios.setExits(null, pasilloDorm2, null, null, null);
-        pasilloSecreto.setExits(pasilloDorm2, null, armeria, null, null);
-        armeria.setExits(pasilloSecreto, null, null, null, null);
-        almacen.setExits(campo, null, null, null, null);
-        hornos.setExits(salaCeniza, null, campo, null, null);
-        salaCeniza.setExits(null, null, hornos, null, null);
-        salaGas.setExits(null, null, null, null, null);
+        campo.setExits(hornos, vestuarios, almacen, null, pasilloDorm1, null);
+        vestuarios.setExits(null, duchas, null, null, campo, null);
+        duchas.setExits(null, null, null, salaGas, vestuarios, null);
+        pasilloDorm1.setExits(null, campo, null, null, pasilloDorm2, null);
+        pasilloDorm2.setExits(null, pasilloDorm1, pasilloSecreto, null, dormitorios, null);
+        dormitorios.setExits(null, pasilloDorm2, null, null, null, null);
+        pasilloSecreto.setExits(pasilloDorm2, null, armeria, null, null, null);
+        armeria.setExits(pasilloSecreto, null, null, null, null, null);
+        almacen.setExits(campo, null, null, null, null, null);
+        hornos.setExits(salaCeniza, null, campo, null, null, null);
+        salaCeniza.setExits(null, null, hornos, null, null, null);
+        salaGas.setExits(null, null, null, null, null, duchas);
 
         currentRoom = campo;  // start game outside
     }
