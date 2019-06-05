@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -36,7 +36,7 @@ public class Game
     {
         Room campo, vestuarios, duchas, pasilloDorm1, pasilloDorm2, dormitorios, armeria,
         pasilloSecreto, almacen, hornos, salaCeniza, salaGas;
-      
+
         // create the rooms
         campo = new Room("en pleno exterior del campo de concentracion");
         vestuarios = new Room("en un vestuario lleno de taquillas sin nombre");
@@ -50,7 +50,7 @@ public class Game
         hornos = new Room("en los hornos crematorios del campo");
         salaCeniza = new Room("en una sala repleta de ceniza, parece que aqui almacenan los restos.");
         salaGas = new Room("en la sala donde controlan el gas de las duchas.");
-        
+
         // initialise room exits
         campo.setExit("north", hornos);
         campo.setExit("south", almacen);
@@ -72,7 +72,7 @@ public class Game
         hornos.setExit("south", campo);
         salaCeniza.setExit("south", hornos);
         salaGas.setExit("northWest", duchas);
-        
+
         currentRoom = campo;  // start game outside
     }
 
@@ -85,7 +85,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -106,7 +106,7 @@ public class Game
         System.out.println();
         printLocationInfo();
     }
-    
+
     /**
      * Imprime por pantalla el mensaje de la sala actual en la que te encuentras y
      * las direcciones posibles.
@@ -116,7 +116,7 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
         System.out.println();
     }
-    
+
     /**
      * Given a command, process (that is: execute) the command.
      * @param command The command to be processed.
@@ -140,6 +140,9 @@ public class Game
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
+        }
+        else if (commandWord.equals("look")) {	
+            look();
         }
 
         return wantToQuit;
@@ -177,7 +180,7 @@ public class Game
 
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
-        
+
         if (nextRoom == null) {
             System.out.println("¡Aquí no hay puerta!");
         }
@@ -201,5 +204,9 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
+    }
+
+    private void look() {   
+        System.out.println(currentRoom.getLongDescription());
     }
 }
