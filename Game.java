@@ -52,19 +52,27 @@ public class Game
         salaGas = new Room("en la sala donde controlan el gas de las duchas.");
         
         // initialise room exits
-        campo.setExits(hornos, almacen, vestuarios, pasilloDorm1, null, null);
-        vestuarios.setExits(null, null, duchas, campo, null, null);
-        duchas.setExits(null, null, null, vestuarios, null, salaGas);
-        pasilloDorm1.setExits(null, null, campo, pasilloDorm2, null, null);
-        pasilloDorm2.setExits(null, pasilloSecreto, pasilloDorm1, dormitorios, null, null);
-        dormitorios.setExits(null, null, pasilloDorm2, null, null, null);
-        pasilloSecreto.setExits(pasilloDorm2, armeria, null, null, null, null);
-        armeria.setExits(pasilloSecreto, null, null, null, null, null);
-        almacen.setExits(campo, null, null, null, null, null);
-        hornos.setExits(salaCeniza, campo, null, null, null, null);
-        salaCeniza.setExits(null, hornos, null, null, null, null);
-        salaGas.setExits(null, null, null, null, duchas, null);
-
+        campo.setExit("north", hornos);
+        campo.setExit("south", almacen);
+        campo.setExit("east", vestuarios);
+        campo.setExit("west", pasilloDorm1);
+        vestuarios.setExit("east", duchas);
+        vestuarios.setExit("weast", campo);
+        duchas.setExit("west", vestuarios);
+        duchas.setExit("southEast", salaGas);
+        pasilloDorm1.setExit("east", campo);
+        pasilloDorm1.setExit("weast", pasilloDorm2);
+        pasilloDorm2.setExit("south", pasilloSecreto);
+        pasilloDorm2.setExit("east", pasilloDorm1);
+        pasilloDorm2.setExit("weast", dormitorios);
+        pasilloSecreto.setExit("north", pasilloDorm2);
+        pasilloSecreto.setExit("south", armeria);
+        armeria.setExit("north", pasilloSecreto);
+        hornos.setExit("north", salaCeniza);
+        hornos.setExit("south", campo);
+        salaCeniza.setExit("south", hornos);
+        salaGas.setExit("northWest", duchas);
+        
         currentRoom = campo;  // start game outside
     }
 
@@ -105,8 +113,7 @@ public class Game
      */
     private void printLocationInfo()
     {
-        System.out.println("Estas " + currentRoom.getDescription());
-        System.out.println(currentRoom.getExitString());
+        System.out.println(currentRoom.getLongDescription());
         System.out.println();
     }
     
