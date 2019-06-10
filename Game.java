@@ -43,18 +43,18 @@ public class Game
         casco = new Item(3, "Te encuentras un casco militar con una esvastica nazi.");
         
         // create the rooms
-        campo = new Room("en pleno exterior del campo de concentracion", casco);
-        vestuarios = new Room("en un vestuario lleno de taquillas sin nombre", null);
-        duchas = new Room("en las duchas, parece que no se han pasado buenos momentos", null);
-        pasilloDorm1 = new Room("en un largo pasillo, al fondo se ven camas", null);
-        pasilloDorm2 = new Room("aun en el pasillo, lográs ver un dormitorio", null);
-        dormitorios = new Room("en los dormitorio, no hay nadie", null);
-        pasilloSecreto = new Room("en un pasillo oculto en las paredes", null);
-        armeria = new Room("en una sala llena de armamento militar", null);
-        almacen = new Room("en un gran almacen lleno de alimentos de baja calidad", null);
-        hornos = new Room("en los hornos crematorios del campo", null);
-        salaCeniza = new Room("en una sala repleta de ceniza, parece que aqui almacenan los restos.", null);
-        salaGas = new Room("en la sala donde controlan el gas de las duchas.", null);
+        campo = new Room("en pleno exterior del campo de concentracion.");
+        vestuarios = new Room("en un vestuario lleno de taquillas sin nombre.");
+        duchas = new Room("en las duchas, parece que no se han pasado buenos momentos.");
+        pasilloDorm1 = new Room("en un largo pasillo, al fondo se ven camas.");
+        pasilloDorm2 = new Room("aun en el pasillo, lográs ver un dormitorio.");
+        dormitorios = new Room("en los dormitorio, no hay nadie.");
+        pasilloSecreto = new Room("en un pasillo oculto en las paredes.");
+        armeria = new Room("en una sala llena de armamento militar.");
+        almacen = new Room("en un gran almacen lleno de alimentos de baja calidad.");
+        hornos = new Room("en los hornos crematorios del campo.");
+        salaCeniza = new Room("en una sala repleta de ceniza, parece que aqui almacenan los restos.");
+        salaGas = new Room("en la sala donde controlan el gas de las duchas.");
 
         // initialise room exits
         campo.setExit("north", hornos);
