@@ -55,7 +55,13 @@ public class Game
         salaGas = new Room("en la sala donde controlan el gas de las duchas.");
 
         // create the room items
+<<<<<<< HEAD
         campo.addItem(new Item(12, "Pistola Parabellum", "Parabellum", true));
+=======
+        campo.addItem(new Item(3, "Casco aleman nazi", "Casco", true));
+        armeria.addItem(new Item(22, "Rifle Mauser", "Mauser", true));
+        armeria.addItem(new Item(12, "Pistola parabellum", "Parabellum", true));
+>>>>>>> cogersoltar
         almacen.addItem(new Item(7, "Saco de patatas", "SacoPatatas", true));
         
         // initialise room exits
@@ -63,6 +69,7 @@ public class Game
         campo.setExit("south", almacen);
         campo.setExit("east", vestuarios);
         campo.setExit("west", pasilloDorm1);
+        almacen.setExit("north", campo);
         vestuarios.setExit("east", duchas);
         vestuarios.setExit("west", campo);
         duchas.setExit("west", vestuarios);
@@ -147,6 +154,18 @@ public class Game
         }
         else if (commandWord.equals("back")) {
             player.back();
+<<<<<<< HEAD
+=======
+        }
+        else if (commandWord.equals("take")) {
+            player.take(command);
+        }
+        else if (commandWord.equals("items")) {
+            player.items();
+        }
+        else if (commandWord.equals("drop")) {
+            player.drop(command);
+>>>>>>> cogersoltar
         }
         return wantToQuit;
     }
@@ -160,8 +179,8 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("Estas perdido. Estas solo. Estas vagando");
+        System.out.println("en el campo de concentracion.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
