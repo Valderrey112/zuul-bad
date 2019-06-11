@@ -19,30 +19,26 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
-    private Stack<Room> roomStack;
+    private Player player;
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        createRooms();
+        player = new Player();
+        player.setCurrentRoom(createRooms());
         parser = new Parser();
-        roomStack = new Stack<Room>();
     }
 
     /**
      * Create all the rooms and link their exits together.
      */
-    private void createRooms()
+    private Room createRooms()
     {
         Room campo, vestuarios, duchas, pasilloDorm1, pasilloDorm2, dormitorios, armeria,
         pasilloSecreto, almacen, hornos, salaCeniza, salaGas;
 
         Item casco;
-        
-        //create the items
-        casco = new Item(3, "Te encuentras un casco militar con una esvastica nazi.");
         
         // create the rooms
         campo = new Room("en pleno exterior del campo de concentracion.");
@@ -59,14 +55,17 @@ public class Game
         salaGas = new Room("en la sala donde controlan el gas de las duchas.");
 
         // create the room items
-        campo.addItem(new Item(12, "Parabellum"));
-        almacen.addItem(new Item(7, "Saco de patatas"));
+        campo.addItem(new Item(3, "Casco aleman nazi", "Casco", true));
+        armeria.addItem(new Item(22, "Rifle Mauser", "Mauser", true));
+        armeria.addItem(new Item(12, "Pistola parabellum", "Parabellum", true));
+        almacen.addItem(new Item(7, "Saco de patatas", "SacoPatatas", true));
         
         // initialise room exits
         campo.setExit("north", hornos);
         campo.setExit("south", almacen);
         campo.setExit("east", vestuarios);
         campo.setExit("west", pasilloDorm1);
+        almacen.setExit("north", campo);
         vestuarios.setExit("east", duchas);
         vestuarios.setExit("west", campo);
         duchas.setExit("west", vestuarios);
@@ -85,7 +84,7 @@ public class Game
         salaCeniza.setExit("south", hornos);
         salaGas.setExit("northWest", duchas);
 
-        currentRoom = campo;  // start game outside
+        return campo;  // start game outside
     }
 
     /**
@@ -116,17 +115,7 @@ public class Game
         System.out.println("No tan bienvenido al campo de concentracion de tu padre");
         System.out.println("Escribe 'help' si necesitas ayuda");
         System.out.println();
-        printLocationInfo();
-    }
-
-    /**
-     * Imprime por pantalla el mensaje de la sala actual en la que te encuentras y
-     * las direcciones posibles.
-     */
-    private void printLocationInfo()
-    {
-        System.out.println(currentRoom.getLongDescription());
-        System.out.println();
+        player.look();
     }
 
     /**
@@ -148,19 +137,22 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")) {
-            goRoom(command);
+            player.goRoom(command);
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")) {  
-            look();
+            player.look();
         }
         else if (commandWord.equals("eat")) {   
-            eat();
+            player.eat();
         }
         else if (commandWord.equals("back")) {
-            back();
+            player.back();
+        }
+        else if (commandWord.equals("take")) {
+            player.take(command);
         }
         return wantToQuit;
     }
@@ -174,37 +166,11 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("Estas perdido. Estas solo. Estas vagando");
+        System.out.println("en el campo de concentracion.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
-    }
-
-    /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("¿Donde ir?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-        // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
-        
-        if (nextRoom == null) {
-            System.out.println("¡Aquí no hay puerta!");
-        }
-        else {
-            roomStack.push(currentRoom);
-            currentRoom = currentRoom.getExit(direction);
-            printLocationInfo();
-        }
     }
 
     /** 
@@ -220,25 +186,6 @@ public class Game
         }
         else {
             return true;  // signal that we want to quit
-        }
-    }
-
-    private void look() {   
-        System.out.println(currentRoom.getLongDescription());
-    }
-
-    private void eat() {   
-        System.out.println("You have eaten now and you are not hungry any more");
-    }
-    
-    private void back() 
-    {
-        if (!roomStack.empty()){
-            currentRoom = roomStack.pop();
-            printLocationInfo();
-        }
-        else{
-            System.out.println("Ya estas en la sala inicial, no puedes volver atras.");
         }
     }
 }

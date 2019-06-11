@@ -49,7 +49,7 @@ public class Room
         String itemActual = "";
         if (listaObjetos.size() > 0){
             for (Item item : listaObjetos){
-                itemActual += item.getDescripcionCompleta() + ".\n";
+                itemActual += item.getDescripcionItem() + ".\n";
             }
         }
         return itemActual;
@@ -90,5 +90,30 @@ public class Room
      */
     public void addItem(Item item){
         listaObjetos.add(item);
+    }
+    
+    /**
+     * Get an item from the room
+     * @return An item in the room
+     */
+    public Item getItem(String id){
+        boolean buscando = true;
+        int position = 0;
+        Item itemToReturn = null;
+        while (buscando && listaObjetos.size() > position){
+            if (listaObjetos.get(position).getItemId().equals(id)){
+                itemToReturn = listaObjetos.get(position);
+                buscando = false;
+            }
+            position++;
+        }
+        return itemToReturn;
+    }
+
+    /**
+     * Remove an item from the room
+     */
+    public void removeItem(Item item){
+        listaObjetos.remove(item);
     }
 }
