@@ -97,4 +97,20 @@ public class Player
             }
         }
     }
+    
+    /**
+     * Muestra los objetos que tiene el jugador encima.
+     */
+    public void items() 
+    {
+        if (bag.size() > 0){
+            System.out.println("En tu mochila tienes.");
+            for (int i = 0; i < bag.size(); i++){
+                System.out.println(bag.get(i).getDescripcionItem());
+            }
+        }
+        else{
+            System.out.println("Tu mochila esta vacia.");
+        }
+    }
 }
