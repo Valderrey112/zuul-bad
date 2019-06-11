@@ -23,6 +23,6 @@ public class Item
      * Devuelve el la descripcion y el peso del objeto.
      */
     public String getDescripcionCompleta(){
-        return descripcion + "\nPesa: " + peso + " kilos.";
+        return descripcion + "\nPesa: " + peso + " kilos";
     }
 }

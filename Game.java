@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-
+    private Room lastRoom;
     /**
      * Create the game and initialise its internal map.
      */
@@ -27,6 +27,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        lastRoom = null;
     }
 
     /**
@@ -56,6 +57,10 @@ public class Game
         salaCeniza = new Room("en una sala repleta de ceniza, parece que aqui almacenan los restos.");
         salaGas = new Room("en la sala donde controlan el gas de las duchas.");
 
+        // create the room items
+        campo.addItem(new Item(12, "Parabellum"));
+        almacen.addItem(new Item(7, "Saco de patatas"));
+        
         // initialise room exits
         campo.setExit("north", hornos);
         campo.setExit("south", almacen);
@@ -146,13 +151,15 @@ public class Game
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
-        else if (commandWord.equals("look")) {	
+        else if (commandWord.equals("look")) {  
             look();
         }
-        else if (commandWord.equals("eat")) {	
+        else if (commandWord.equals("eat")) {   
             eat();
         }
-
+        else if (commandWord.equals("back")) {
+            back();
+        }
         return wantToQuit;
     }
 
@@ -178,6 +185,7 @@ public class Game
      */
     private void goRoom(Command command) 
     {
+        lastRoom = currentRoom;
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("¿Donde ir?");
@@ -220,5 +228,13 @@ public class Game
 
     private void eat() {   
         System.out.println("You have eaten now and you are not hungry any more");
+    }
+    
+    private void back() 
+    {
+        if (lastRoom != null){
+            currentRoom = lastRoom;
+            printLocationInfo();
+        }
     }
 }
