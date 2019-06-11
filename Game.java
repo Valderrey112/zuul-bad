@@ -1,3 +1,4 @@
+import java.util.Stack;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,7 +20,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room lastRoom;
+    private Stack<Room> roomStack;
     /**
      * Create the game and initialise its internal map.
      */
@@ -27,7 +28,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        lastRoom = null;
+        roomStack = new Stack<Room>();
     }
 
     /**
@@ -67,16 +68,17 @@ public class Game
         campo.setExit("east", vestuarios);
         campo.setExit("west", pasilloDorm1);
         vestuarios.setExit("east", duchas);
-        vestuarios.setExit("weast", campo);
+        vestuarios.setExit("west", campo);
         duchas.setExit("west", vestuarios);
         duchas.setExit("southEast", salaGas);
         pasilloDorm1.setExit("east", campo);
-        pasilloDorm1.setExit("weast", pasilloDorm2);
+        pasilloDorm1.setExit("west", pasilloDorm2);
         pasilloDorm2.setExit("south", pasilloSecreto);
         pasilloDorm2.setExit("east", pasilloDorm1);
-        pasilloDorm2.setExit("weast", dormitorios);
+        pasilloDorm2.setExit("west", dormitorios);
         pasilloSecreto.setExit("north", pasilloDorm2);
         pasilloSecreto.setExit("south", armeria);
+        dormitorios.setExit("east", pasilloDorm1);
         armeria.setExit("north", pasilloSecreto);
         hornos.setExit("north", salaCeniza);
         hornos.setExit("south", campo);
@@ -185,7 +187,6 @@ public class Game
      */
     private void goRoom(Command command) 
     {
-        lastRoom = currentRoom;
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("¿Donde ir?");
@@ -193,15 +194,15 @@ public class Game
         }
 
         String direction = command.getSecondWord();
-
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
-
+        
         if (nextRoom == null) {
             System.out.println("¡Aquí no hay puerta!");
         }
         else {
-            currentRoom = nextRoom;
+            roomStack.push(currentRoom);
+            currentRoom = currentRoom.getExit(direction);
             printLocationInfo();
         }
     }
@@ -232,9 +233,12 @@ public class Game
     
     private void back() 
     {
-        if (lastRoom != null){
-            currentRoom = lastRoom;
+        if (!roomStack.empty()){
+            currentRoom = roomStack.pop();
             printLocationInfo();
+        }
+        else{
+            System.out.println("Ya estas en la sala inicial, no puedes volver atras.");
         }
     }
 }
