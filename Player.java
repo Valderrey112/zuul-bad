@@ -6,13 +6,9 @@ public class Player
     // instance variables - replace the example below with your own
     private Room currentRoom;
     private Stack<Room> roomStack;
-<<<<<<< HEAD
-
-=======
     private ArrayList<Item> bag;
     private int bagWeigth;
-    private static final int MAX_WEIGTH = 40;
->>>>>>> cogersoltar
+    private static int MAX_WEIGTH = 40;
     /**
      * Constructor for objects of class Player
      */
@@ -21,11 +17,8 @@ public class Player
         // initialise instance variables
         currentRoom = null;
         roomStack = new Stack<Room>();
-<<<<<<< HEAD
-=======
         bag = new ArrayList<>();
         bagWeigth = 0;
->>>>>>> cogersoltar
     }
     
     public void setCurrentRoom(Room room){
@@ -58,14 +51,20 @@ public class Player
         }
     }
     
+    /** 
+     * Vuelve a imprimir por pantalla la informacion de la sala actual.
+     */
     public void look() {   
         System.out.println(currentRoom.getLongDescription());
     }
-
+    
     public void eat() {   
         System.out.println("You have eaten now and you are not hungry any more");
     }
     
+    /** 
+     * Vuelve a la habitacion anterior
+     */
     public void back()         
     {
         if (!roomStack.empty()){
@@ -76,9 +75,10 @@ public class Player
             System.out.println("Ya estas en la sala inicial, no puedes volver atras.");
         }
     }
-<<<<<<< HEAD
-=======
     
+    /** 
+     * Coge un objeto de la habitacion y lo guarda en la mochila si no supera el peso maximo
+     */
     public void take(Command command) 
     {
         if(!command.hasSecondWord()) {
@@ -89,7 +89,7 @@ public class Player
         String itemID = command.getSecondWord();
         Item itemToTake = currentRoom.getItem(itemID);
 
-        if (itemToTake != null && bagWeigth + itemToTake.getWeigth() < MAX_WEIGTH){
+        if (itemToTake != null && bagWeigth + itemToTake.getWeigth() < MAX_WEIGTH && itemToTake.getPuedeCogerse() == true){
             System.out.println("Has cogido el siguiente objeto:" + "\n");
             System.out.println(itemToTake.getDescripcionItem());
             bagWeigth += itemToTake.getWeigth();
@@ -99,7 +99,7 @@ public class Player
 
         else{
             if (itemToTake == null){
-                System.out.println("No hay objetos en la habitacion.");
+                System.out.println("No hay objetos en la habitacion o lo has escrito mal.");
             }
             else{
                 System.out.println("No puedes cargar con este objeto.");
@@ -124,7 +124,7 @@ public class Player
     }
     
     /**
-     * Drop an item into the room choosing the item id
+     * Deja un objeto de la mochila en la sala indicando el id del objeto.
      */
     public void drop(Command command) 
     {
@@ -154,5 +154,31 @@ public class Player
             System.out.println("No hay objetos en la mochila.");
         }
     }
->>>>>>> cogersoltar
+    
+    public void upWeigth(){
+        MAX_WEIGTH = 45;
+    }
+    
+    /**
+     * Drop an item into the room choosing the item id
+     */
+    public void call(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            System.out.println("No has indicado a quien llamar.");
+            return;
+        }
+        String itemID = command.getSecondWord();
+        Item itemToCompare = currentRoom.getItem(itemID);
+        if (itemToCompare != null && itemToCompare.getItemId().equals("Fuhrer")){
+            System.out.println("Esta en comunicacion por varios segundos, hasta que te cogen el telefono");
+            System.out.println("Es el temido Fuhrer, que al saber que eres el hijo del dueño del campo de concentracion,");
+            System.out.println("te condecora con una medalla nazi que hay en la misma sala de horno en la que estas.");
+            System.out.println("Notas que te haces mas fuerte.");
+            MAX_WEIGTH = 45;
+            }
+        else{
+            System.out.println("Aqui no hay ningun numero de telefono.");
+        }
+    }
 }

@@ -93,8 +93,7 @@ public class Room
     }
     
     /**
-     * Get an item from the room
-     * @return An item in the room
+     * Devuelve los item de la habitacion.
      */
     public Item getItem(String id){
         boolean buscando = true;
@@ -111,7 +110,7 @@ public class Room
     }
 
     /**
-     * Remove an item from the room
+     * Borra un item de la habitacion.
      */
     public void removeItem(Item item){
         listaObjetos.remove(item);

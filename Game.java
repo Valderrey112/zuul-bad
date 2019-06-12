@@ -31,21 +31,19 @@ public class Game
     }
 
     /**
-     * Create all the rooms and link their exits together.
+     * Crean las habitaciones, les relaciona las salidas y los objetos.
      */
     private Room createRooms()
     {
-        Room campo, vestuarios, duchas, pasilloDorm1, pasilloDorm2, dormitorios, armeria,
+        Room campo, vestuarios, duchas, pasillo1, pasillo2, dormitorios, armeria,
         pasilloSecreto, almacen, hornos, salaCeniza, salaGas;
 
-        Item casco;
-        
         // create the rooms
         campo = new Room("en pleno exterior del campo de concentracion.");
         vestuarios = new Room("en un vestuario lleno de taquillas sin nombre.");
         duchas = new Room("en las duchas, parece que no se han pasado buenos momentos.");
-        pasilloDorm1 = new Room("en un largo pasillo, al fondo se ven camas.");
-        pasilloDorm2 = new Room("aun en el pasillo, lográs ver un dormitorio.");
+        pasillo1 = new Room("en un largo pasillo, al fondo se ven camas.");
+        pasillo2 = new Room("aun en el pasillo, lográs ver un dormitorio.");
         dormitorios = new Room("en los dormitorio, no hay nadie.");
         pasilloSecreto = new Room("en un pasillo oculto en las paredes.");
         armeria = new Room("en una sala llena de armamento militar.");
@@ -55,33 +53,31 @@ public class Game
         salaGas = new Room("en la sala donde controlan el gas de las duchas.");
 
         // create the room items
-<<<<<<< HEAD
-        campo.addItem(new Item(12, "Pistola Parabellum", "Parabellum", true));
-=======
-        campo.addItem(new Item(3, "Casco aleman nazi", "Casco", true));
-        armeria.addItem(new Item(22, "Rifle Mauser", "Mauser", true));
-        armeria.addItem(new Item(12, "Pistola parabellum", "Parabellum", true));
->>>>>>> cogersoltar
-        almacen.addItem(new Item(7, "Saco de patatas", "SacoPatatas", true));
+        campo.addItem(new Item(80, "Monumento de Adolf Hitler", "monumento", false));
+        pasillo1.addItem(new Item(3, "Casco aleman nazi", "casco", true));
+        armeria.addItem(new Item(22, "Rifle Mauser", "mauser", true));
+        armeria.addItem(new Item(12, "Pistola parabellum", "parabellum", true));
+        almacen.addItem(new Item(7, "Saco de patatas", "sacopatatas", true));
+        hornos.addItem(new Item(8, "Telefono rojo, tiene el numero del Fuhrer apuntado en una nota", "Fuhrer", false));
         
         // initialise room exits
         campo.setExit("north", hornos);
         campo.setExit("south", almacen);
         campo.setExit("east", vestuarios);
-        campo.setExit("west", pasilloDorm1);
+        campo.setExit("west", pasillo1);
         almacen.setExit("north", campo);
         vestuarios.setExit("east", duchas);
         vestuarios.setExit("west", campo);
         duchas.setExit("west", vestuarios);
         duchas.setExit("southEast", salaGas);
-        pasilloDorm1.setExit("east", campo);
-        pasilloDorm1.setExit("west", pasilloDorm2);
-        pasilloDorm2.setExit("south", pasilloSecreto);
-        pasilloDorm2.setExit("east", pasilloDorm1);
-        pasilloDorm2.setExit("west", dormitorios);
-        pasilloSecreto.setExit("north", pasilloDorm2);
+        pasillo1.setExit("east", campo);
+        pasillo1.setExit("west", pasillo2);
+        pasillo2.setExit("south", pasilloSecreto);
+        pasillo2.setExit("east", pasillo1);
+        pasillo2.setExit("west", dormitorios);
+        pasilloSecreto.setExit("north", pasillo2);
         pasilloSecreto.setExit("south", armeria);
-        dormitorios.setExit("east", pasilloDorm1);
+        dormitorios.setExit("east", pasillo1);
         armeria.setExit("north", pasilloSecreto);
         hornos.setExit("north", salaCeniza);
         hornos.setExit("south", campo);
@@ -154,8 +150,6 @@ public class Game
         }
         else if (commandWord.equals("back")) {
             player.back();
-<<<<<<< HEAD
-=======
         }
         else if (commandWord.equals("take")) {
             player.take(command);
@@ -165,7 +159,9 @@ public class Game
         }
         else if (commandWord.equals("drop")) {
             player.drop(command);
->>>>>>> cogersoltar
+        }
+        else if (commandWord.equals("call")) {
+            player.call(command);
         }
         return wantToQuit;
     }
@@ -183,7 +179,7 @@ public class Game
         System.out.println("en el campo de concentracion.");
         System.out.println();
         System.out.println("Your command words are:");
-        parser.showCommands();
+        System.out.println(parser.showCommands());
     }
 
     /** 

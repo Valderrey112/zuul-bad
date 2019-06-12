@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class Item here.
  *
@@ -15,11 +14,7 @@ public class Item
     /**
      * Constructor for objects of class Item
      */
-<<<<<<< HEAD
-    public Item(int peso, String descripcion, String id, boolean puedeCogerse)
-=======
     public Item(int weigth, String descripcion, String id, boolean puedeCogerse)
->>>>>>> cogersoltar
     {
        this.weigth = weigth;
        this.descripcion = descripcion;
@@ -30,18 +25,12 @@ public class Item
     /**
      * Devuelve el la descripcion y el peso del objeto.
      */
-<<<<<<< HEAD
-    public String getDescripcionCompleta(){
-        return descripcion + "\nPesa: " + peso + " kilos" + " // ID: " + id;
-=======
     public String getDescripcionItem(){
         return descripcion + "\nPesa: " + weigth + " kilos" + " // ID: " + id;
     }
     
     /**
-     * Return the Item weigth
-     *
-     * @return    the Item weigth
+     * Devuelve el peso del objeto.
      */
     public int getWeigth()
     {
@@ -49,13 +38,18 @@ public class Item
     }
 
     /**
-     * Return the Item ID
-     *
-     * @return    the Item ID
+     * Devuelve el id del item
      */
     public String getItemId()
     {
         return id;
->>>>>>> cogersoltar
+    }
+    
+    /**
+     * Devuelve si el objeto se puede coger.
+     */
+    public boolean getPuedeCogerse()
+    {
+        return puedeCogerse;
     }
 }
